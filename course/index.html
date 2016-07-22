@@ -7,51 +7,32 @@
         <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" media="screen" charset="utf-8">
     </head>
     <body>
-        <div class="container" id="hello">
+        <div class="container" id="app">
             <div class="row">
-                <h1>{{ msg }}</h1>
-                <input type="text" class="form-control" v-model="msg">
-                <div class="row">
-                    <h1>My List</h1>
-                    <ul>
-                        <li v-for="o in peoples">{{ o.name }}</li>
-                    </ul>
+                <h1>Books</h1>
+                <div class="well">
+                    <input type="search" v-model="MySearch" class="form-control" placeholder="Search">
                 </div>
             </div>
             <div class="row">
-                <h1>My list elements</h1>
-                <input type="text" class="form-control" v-model="newElement" v-on:keyup.enter="addElement">
-                <li v-for="element in elements">
-                    {{ element.title }}
-                    <a href="#" v-on:click="removeElement($event, $index)">X</a>
-                </li>
-            </div>
-            <div class="row">
-                <h1>v-on</h1>
-                <button v-on:click="myClick">Click</button>
-                <button @click="myClick">@Click</button>
-                <input type="text" @keyup="myClick" placeholder="@keyup">
-                <input type="text" @keyup.enter="myClick" placeholder="@keyup.enter">
-            </div>
-            <div class="row">
-                <h1>v-bind</h1>
-                <p v-bind:class="{ 'text-danger': 1 === 1, 'text-info': true }">text</p>
-                <p :class="{ 'text-danger': 2 === 1, 'text-info': true }">:text</p>
-                <p :style="{ fontSize:30 + 'px' }">Style</p>
-                <p :style="{ 'font-size':30 + 'px' }">Style</p>
-                <p :style="[objectA,objectB]">objectA and B</p>
-                <p v-bind:="{ id: 1 === 1, name: true }">bind attibute</p>
-            </div>
-            <div class="row">
-                <h1>v-model</h1>
-                <ul>
-                    <li v-for="myList in myListForm">
-                        {{ myList.name }} - {{ myList.email }}
-                    </li>
-                </ul>
-                <input type="text" v-model="myForm.name" placeholder="Name">
-                <input type="text" v-model="myForm.email" placeholder="Email">
-                <button @click="addForm">Add</button>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Value</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="book in books | filterBy MySearch">
+                            <td>{{ book.id }}</td>
+                            <td>{{ book.title }}</td>
+                            <td>{{ book.value }}</td>
+                            <td>{{ book.description }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         <br>
