@@ -16,6 +16,11 @@ var hello = new Vue({
         },
         objectB: {
             color: 'red'
+        },
+        myListForm: [],
+        myForm: {
+            name: '',
+            email: ''
         }
     },
     methods: {
@@ -33,6 +38,14 @@ var hello = new Vue({
         },
         myClick: function() {
             alert('Click');
+        },
+        addForm: function() {
+            this.myListForm.push({
+                name: this.myForm.name,
+                email: this.myForm.email
+            });
+            this.myForm.name = '';
+            this.myForm.email = '';
         }
     }
 });

@@ -42,7 +42,21 @@
                 <p :style="[objectA,objectB]">objectA and B</p>
                 <p v-bind:="{ id: 1 === 1, name: true }">bind attibute</p>
             </div>
+            <div class="row">
+                <h1>v-model</h1>
+                <ul>
+                    <li v-for="myList in myListForm">
+                        {{ myList.name }} - {{ myList.email }}
+                    </li>
+                </ul>
+                <input type="text" v-model="myForm.name" placeholder="Name">
+                <input type="text" v-model="myForm.email" placeholder="Email">
+                <button @click="addForm">Add</button>
+            </div>
         </div>
+        <br>
+        <br>
+        <br>
 
 
         <script type="text/javascript" src="node_modules/vue/dist/vue.js"></script>
