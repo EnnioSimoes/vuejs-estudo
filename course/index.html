@@ -18,21 +18,72 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Title</th>
-                            <th>Value</th>
-                            <th>Description</th>
+                            <th>
+                                <i class="fa fa-fw fa-sort"
+                                v-bind:class="{
+                                    'fa-sort-amount-asc': orderCol === 'id' && orderInverse === 1,
+                                    'fa-sort-amount-desc': orderCol === 'id' && orderInverse === -1,
+                                }"
+                                ></i>
+                                <a href="#" v-on:click="filterOrderBy($event, 'id')">Id</a>
+                            </th>
+                            <th>
+                                <i class="fa fa-fw fa-sort"
+                                v-bind:class="{
+                                    'fa-sort-amount-asc': orderCol === 'title' && orderInverse === 1,
+                                    'fa-sort-amount-desc': orderCol === 'title' && orderInverse === -1,
+                                }"
+                                ></i>
+                                <a href="#" v-on:click="filterOrderBy($event, 'title')">Title</a>
+                            </th>
+                            <th>
+                                <i class="fa fa-fw fa-sort"
+                                v-bind:class="{
+                                    'fa-sort-amount-asc': orderCol === 'value' && orderInverse === 1,
+                                    'fa-sort-amount-desc': orderCol === 'value' && orderInverse === -1,
+                                }"
+                                ></i>
+                                <a href="#" v-on:click="filterOrderBy($event, 'value')">Value</a>
+                            </th>
+                            <th>
+                                <i class="fa fa-fw fa-sort"
+                                v-bind:class="{
+                                    'fa-sort-amount-asc': orderCol === 'description' && orderInverse === 1,
+                                    'fa-sort-amount-desc': orderCol === 'description' && orderInverse === -1,
+                                }"
+                                ></i>
+                                <a href="#" v-on:click="filterOrderBy($event, 'description')">Description</a>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="book in books | filterBy MySearch">
+                        <tr v-for="book in books | filterBy MySearch | orderBy orderCol orderInverse ">
                             <td>{{ book.id }}</td>
-                            <td>{{ book.title }}</td>
-                            <td>{{ book.value }}</td>
+                            <td>{{ book.title | uppercase }}</td>
+                            <td>{{ book.value | currency 'R$' }}</td>
                             <td>{{ book.description }}</td>
                         </tr>
                     </tbody>
                 </table>
+                <nav class="text-center">
+                    <ul class="pagination">
+                        <li v-bind:class="{'disabled': pagination.current === 1}">
+                            <a href="#" @click="previous" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li v-for="page in pagination.listPagination"
+                        v-bind:class="{'active': pagination.current === $index + 1}"
+                        >
+                            <a href="#" @click="pagePagination($event, $index)" >{{ $index + 1 }}</a>
+                        </li>
+                        <li v-bind:class="{'disabled': pagination.current === pagination.totalPages }">
+                            <a href="#" @click="next" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
         <br>
